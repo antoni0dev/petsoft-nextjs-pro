@@ -10,15 +10,6 @@ import { usePetContext } from '@/providers/PetsContextProvider';
 const DashboardPage = async () => {
   const { handleSetPets } = usePetContext();
 
-  const response = await fetch(
-    'https://bytegrad.com/course-assets/projects/petsoft/api/pets'
-  );
-  if (!response.ok) {
-    throw new Error('Failed to fetch pets.');
-  }
-
-  const petsData = await response.json();
-
   return (
     <main>
       <div className='flex items-center justify-between text-white py-8'>
