@@ -1,13 +1,14 @@
 'use client';
 
 import { Pet } from '@/lib/types';
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useMemo, useRef, useState } from 'react';
 import { createContext } from 'react';
 
 type PetsContextType = {
   pets: Pet[];
   selectedPetId: number | null;
   selectedPet: Pet | null;
+  numberOfPets: number;
   handleChangeSelectedPetId: (petId: number) => void;
   handleSetPets: (pets: Pet[]) => void;
 };
@@ -34,11 +35,14 @@ const PetsContextProvider = ({
   children,
 }: PetsContextProviderProps) => {
   const [pets, setPets] = useState<Pet[]>(petsData);
+  const prevPetsData = useRef(petsData);
+
   const [selectedPetId, setSelectedPetId] = useState<number | null>(null);
   const selectedPet = pets.find((pet) => pet.id === selectedPetId) || null;
+  const numberOfPets = pets.length;
 
   const handleSetPets = (pets: Pet[]) => setPets(pets);
-  const handleChangeSelectedPetId = (petId: number) => setSelectedPetId(petId);
+  const handleChangeSelectedPetId = (id: number) => setSelectedPetId(id);
 
   const value = useMemo(
     () => ({
@@ -47,14 +51,15 @@ const PetsContextProvider = ({
       handleChangeSelectedPetId,
       handleSetPets,
       selectedPet,
+      numberOfPets,
     }),
-    [pets, selectedPetId, selectedPet]
+    [pets, selectedPetId, selectedPet, numberOfPets]
   );
 
-  // ref for synchronizing pets with petsData
-  const prevPetsData = useRef(petsData);
+  // synchronizing pets state with props
   if (prevPetsData.current !== petsData) {
     setPets(petsData);
+    prevPetsData.current = petsData;
     return;
   }
 

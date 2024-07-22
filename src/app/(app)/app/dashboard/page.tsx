@@ -5,11 +5,8 @@ import PetButton from '@/components/PetButton';
 import SearchForm from '@/components/SearchForm';
 import PetList from '@/components/PetList';
 import PetDetails from '@/components/PetDetails';
-import { usePetContext } from '@/providers/PetsContextProvider';
 
 const DashboardPage = async () => {
-  const { handleSetPets } = usePetContext();
-
   return (
     <main>
       <div className='flex items-center justify-between text-white py-8'>

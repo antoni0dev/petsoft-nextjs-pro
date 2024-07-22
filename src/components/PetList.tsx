@@ -1,15 +1,14 @@
 'use client';
 
 import { usePetContext } from '@/providers/PetsContextProvider';
+import { useSearchContext } from '@/providers/SearchContextProvider';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useMemo } from 'react';
 
 export default function PetList() {
   const { pets, selectedPetId, handleChangeSelectedPetId } = usePetContext();
-  // TODO: fix this
-  // const { searchQuery } = useSearchContext();
-  const searchQuery = '';
+  const { searchQuery } = useSearchContext();
 
   const filteredPets = useMemo(
     () => pets.filter((pet) => pet.name.toLowerCase().includes(searchQuery)),

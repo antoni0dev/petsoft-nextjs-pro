@@ -1,8 +1,9 @@
 import AppFooter from '@/components/AppFooter';
-import AppHeader from '@/components/AppFooter';
+import AppHeader from '@/components/AppHeader';
 import BackgroundPattern from '@/components/AppFooter';
 import { Pet } from '@/lib/types';
 import PetsContextProvider from '@/providers/PetsContextProvider';
+import { SearchContextProvider } from '@/providers/SearchContextProvider';
 
 const AppLayout = async ({ children }: { children: React.ReactNode }) => {
   const response = await fetch(
@@ -18,12 +19,14 @@ const AppLayout = async ({ children }: { children: React.ReactNode }) => {
   // this will still go through the root layout
   return (
     <PetsContextProvider petsData={petsData}>
-      <BackgroundPattern />
-      <div className='flex flex-col max-w-[1050px] mx-auto px-4 min-h-screen'>
-        <AppHeader></AppHeader>
-        {children}
-        <AppFooter></AppFooter>
-      </div>
+      <SearchContextProvider>
+        <BackgroundPattern />
+        <div className='flex flex-col max-w-[1050px] mx-auto px-4 min-h-screen'>
+          <AppHeader />
+          {children}
+          <AppFooter />
+        </div>
+      </SearchContextProvider>
     </PetsContextProvider>
   );
 };

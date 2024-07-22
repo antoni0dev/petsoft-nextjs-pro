@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchContext } from '@/lib/hooks';
+import { useSearchContext } from '@/providers/SearchContextProvider';
 
 export default function SearchForm() {
   const { searchQuery, handleChangeSearchQuery } = useSearchContext();
